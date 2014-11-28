@@ -1,0 +1,72 @@
+Process_3: Factory insertVertex localId = 0, globalID = 7 with coordinates = -0.707107 -0.707107 0.000000 
+Process_3: Factory insertVertex localId = 1, globalID = 8 with coordinates = -0.707107 0.707107 0.000000 
+Process_3: Factory insertVertex localId = 2, globalID = 9 with coordinates = -0.707107 0.000000 -0.707107 
+Process_3: Factory insertVertex localId = 3, globalID = 10 with coordinates = -0.707107 0.000000 0.707107 
+Process_3: Factory insertVertex localId = 4, globalID = 11 with coordinates = 0.707107 -0.707107 0.000000 
+Process_3: Factory insertVertex localId = 5, globalID = 12 with coordinates = 0.707107 0.707107 0.000000 
+Process_3: Factory insertVertex localId = 6, globalID = 13 with coordinates = 0.707107 0.000000 -0.707107 
+Process_3: Factory insertVertex localId = 7, globalID = 14 with coordinates = 0.707107 0.000000 0.707107 
+Process_3: Factory insertVertex localId = 8, globalID = 15 with coordinates = 0.000000 -0.707107 -0.707107 
+Process_3: Factory insertVertex localId = 9, globalID = 16 with coordinates = 0.000000 -0.707107 0.707107 
+Process_3: Factory insertVertex localId = 10, globalID = 17 with coordinates = 0.000000 0.707107 -0.707107 
+Process_3: Factory insertVertex localId = 11, globalID = 18 with coordinates = 0.000000 0.707107 0.707107 
+Process_3: Factory insertVertex localId = 12, globalID = 19 with coordinates = 0.000000 0.000000 0.000000 
+Process_3: Factory insertElement localID = 0, globalID = 57 with vertices = 0 12 3 9 
+Process_3: Factory insertElement localID = 1, globalID = 58 with vertices = 4 12 6 8 
+Process_3: Factory insertElement localID = 2, globalID = 59 with vertices = 1 12 2 10 
+Process_3: Factory insertElement localID = 3, globalID = 60 with vertices = 0 12 8 2 
+Process_3: Factory insertElement localID = 4, globalID = 61 with vertices = 3 12 1 11 
+Process_3: Factory insertElement localID = 5, globalID = 62 with vertices = 7 12 4 9 
+Process_3: Factory insertElement localID = 6, globalID = 63 with vertices = 7 12 11 5 
+Process_3: Factory insertElement localID = 7, globalID = 64 with vertices = 10 12 6 5 
+Process_3: Factory insertBoundarySegment localID = 0, globalID = 1 with vertices = 2 0 8 
+Process_3: Factory insertBoundarySegment localID = 1, globalID = 5 with vertices = 0 9 3 
+Process_3: Factory insertBoundarySegment localID = 2, globalID = 11 with vertices = 2 1 10 
+Process_3: Factory insertBoundarySegment localID = 3, globalID = 15 with vertices = 11 3 1 
+Process_3: Factory insertBoundarySegment localID = 4, globalID = 17 with vertices = 4 8 6 
+Process_3: Factory insertBoundarySegment localID = 5, globalID = 21 with vertices = 7 4 9 
+Process_3: Factory insertBoundarySegment localID = 6, globalID = 26 with vertices = 6 5 10 
+Process_3: Factory insertBoundarySegment localID = 7, globalID = 30 with vertices = 7 5 11 
+Process_3: parmetis result: 3 3 2 3 3 3 3 3 
+Process_3: Making subentity keys for element 0 given by: 0 5 0 2 
+Process_3: * Adding boundary key 0 0 2 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 2 5 
+Process_3: * Adding boundary key 0 2 5 
+Process_3: Making subentity keys for element 1 given by: 0 5 0 1 
+Process_3: * Adding boundary key 0 0 1 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 1 5 
+Process_3: * Adding boundary key 0 1 5 
+Process_3: Making subentity keys for element 2 given by: 0 5 0 3 
+Process_3: * Adding boundary key 0 0 3 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 3 5 
+Process_3: * Adding boundary key 0 3 5 
+Process_3: Making subentity keys for element 3 given by: 0 5 1 0 
+Process_3: * Adding boundary key 0 0 1 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 1 5 
+Process_3: * Adding boundary key 0 1 5 
+Process_3: Making subentity keys for element 4 given by: 0 5 0 4 
+Process_3: * Adding boundary key 0 0 4 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 4 5 
+Process_3: * Adding boundary key 0 4 5 
+Process_3: Making subentity keys for element 5 given by: 0 5 0 2 
+Process_3: * Adding boundary key 0 0 2 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 2 5 
+Process_3: * Adding boundary key 0 2 5 
+Process_3: Making subentity keys for element 6 given by: 0 5 4 0 
+Process_3: * Adding boundary key 0 0 4 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 4 5 
+Process_3: * Adding boundary key 0 4 5 
+Process_3: Making subentity keys for element 7 given by: 3 5 0 0 
+Process_3: * Adding boundary key 0 0 3 
+Process_3: * Adding boundary key 0 0 5 
+Process_3: * Adding boundary key 0 3 5 
+Process_3: * Adding boundary key 0 3 5 
+Process_3: Making boundary key for boundary given by: 0 0 1 
+Process_3: Error: Have not found boundary face 0 0 1 

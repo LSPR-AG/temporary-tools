@@ -1,0 +1,70 @@
+Process_0: Factory insertVertex localId = 0, globalID = 1 with coordinates = -1.000000 0.000000 0.000000 
+Process_0: Factory insertVertex localId = 1, globalID = 2 with coordinates = 1.000000 0.000000 0.000000 
+Process_0: Factory insertVertex localId = 2, globalID = 7 with coordinates = -0.707107 -0.707107 0.000000 
+Process_0: Factory insertVertex localId = 3, globalID = 8 with coordinates = -0.707107 0.707107 0.000000 
+Process_0: Factory insertVertex localId = 4, globalID = 9 with coordinates = -0.707107 0.000000 -0.707107 
+Process_0: Factory insertVertex localId = 5, globalID = 10 with coordinates = -0.707107 0.000000 0.707107 
+Process_0: Factory insertVertex localId = 6, globalID = 11 with coordinates = 0.707107 -0.707107 0.000000 
+Process_0: Factory insertVertex localId = 7, globalID = 12 with coordinates = 0.707107 0.707107 0.000000 
+Process_0: Factory insertVertex localId = 8, globalID = 13 with coordinates = 0.707107 0.000000 -0.707107 
+Process_0: Factory insertVertex localId = 9, globalID = 14 with coordinates = 0.707107 0.000000 0.707107 
+Process_0: Factory insertVertex localId = 10, globalID = 19 with coordinates = 0.000000 0.000000 0.000000 
+Process_0: Factory insertElement localID = 0, globalID = 33 with vertices = 2 10 0 5 
+Process_0: Factory insertElement localID = 1, globalID = 34 with vertices = 4 10 3 0 
+Process_0: Factory insertElement localID = 2, globalID = 35 with vertices = 2 10 4 0 
+Process_0: Factory insertElement localID = 3, globalID = 36 with vertices = 7 10 8 1 
+Process_0: Factory insertElement localID = 4, globalID = 37 with vertices = 1 10 8 6 
+Process_0: Factory insertElement localID = 5, globalID = 38 with vertices = 0 10 3 5 
+Process_0: Factory insertElement localID = 6, globalID = 39 with vertices = 9 10 7 1 
+Process_0: Factory insertElement localID = 7, globalID = 40 with vertices = 9 10 1 6 
+Process_0: Factory insertBoundarySegment localID = 0, globalID = 2 with vertices = 4 0 2 
+Process_0: Factory insertBoundarySegment localID = 1, globalID = 6 with vertices = 0 2 5 
+Process_0: Factory insertBoundarySegment localID = 2, globalID = 9 with vertices = 0 3 4 
+Process_0: Factory insertBoundarySegment localID = 3, globalID = 13 with vertices = 5 0 3 
+Process_0: Factory insertBoundarySegment localID = 4, globalID = 18 with vertices = 1 6 8 
+Process_0: Factory insertBoundarySegment localID = 5, globalID = 22 with vertices = 9 1 6 
+Process_0: Factory insertBoundarySegment localID = 6, globalID = 25 with vertices = 8 1 7 
+Process_0: Factory insertBoundarySegment localID = 7, globalID = 29 with vertices = 1 7 9 
+Process_0: parmetis result: 0 0 0 1 1 0 0 1 
+Process_0: Making subentity keys for element 0 given by: 1 5 0 0 
+Process_0: * Adding boundary key 0 0 1 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 1 5 
+Process_0: * Adding boundary key 0 1 5 
+Process_0: Making subentity keys for element 1 given by: 0 5 0 0 
+Process_0: * Adding boundary key 0 0 0 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: Making subentity keys for element 2 given by: 1 5 0 0 
+Process_0: * Adding boundary key 0 0 1 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 1 5 
+Process_0: * Adding boundary key 0 1 5 
+Process_0: Making subentity keys for element 3 given by: 2 5 3 0 
+Process_0: * Adding boundary key 0 2 3 
+Process_0: * Adding boundary key 0 2 5 
+Process_0: * Adding boundary key 0 3 5 
+Process_0: * Adding boundary key 2 3 5 
+Process_0: Making subentity keys for element 4 given by: 0 5 3 0 
+Process_0: * Adding boundary key 0 0 3 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 3 5 
+Process_0: * Adding boundary key 0 3 5 
+Process_0: Making subentity keys for element 5 given by: 0 5 0 0 
+Process_0: * Adding boundary key 0 0 0 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: Making subentity keys for element 6 given by: 4 5 2 0 
+Process_0: * Adding boundary key 0 2 4 
+Process_0: * Adding boundary key 0 2 5 
+Process_0: * Adding boundary key 0 4 5 
+Process_0: * Adding boundary key 2 4 5 
+Process_0: Making subentity keys for element 7 given by: 4 5 0 0 
+Process_0: * Adding boundary key 0 0 4 
+Process_0: * Adding boundary key 0 0 5 
+Process_0: * Adding boundary key 0 4 5 
+Process_0: * Adding boundary key 0 4 5 
+Process_0: Making boundary key for boundary given by: 0 0 1 
+Process_0: Error: Have not found boundary face 0 0 1 

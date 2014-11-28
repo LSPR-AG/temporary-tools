@@ -1,0 +1,12 @@
+InterpolationIntegratorNumericalTest.cc:4:18: warning: unused parameter ‘x’ [-Wunused-parameter]
+ double f1(double x, double y) { return 1; }
+                  ^
+InterpolationIntegratorNumericalTest.cc:4:28: warning: unused parameter ‘y’ [-Wunused-parameter]
+ double f1(double x, double y) { return 1; }
+                            ^
+InterpolationIntegratorNumericalTest.cc:5:28: warning: unused parameter ‘y’ [-Wunused-parameter]
+ double f2(double x, double y) { return 1 + x; }
+                            ^
+InterpolationIntegratorNumericalTest.cc:9:18: warning: unused parameter ‘x’ [-Wunused-parameter]
+ double g1(double x) { return 1; }
+                  ^

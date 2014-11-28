@@ -1,0 +1,294 @@
+// constructing vectors
+#include <iostream>
+#include <vector>
+#include <queue>          // std::queue
+#include <algorithm>
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+#include <math.h>
+
+
+typedef std::vector<double> Coordinate;
+typedef std::vector<Coordinate> CoordVector;
+
+double f1(double x, double y) { return 1 + x * x + y * y; } //cos(x) * sin(y); }
+double f2(double x, double y) { return 1 + x; }
+double f3(double x, double y) { return 1; }
+
+double g1(double x) { return 1; }
+double g2(double x) { return x; }
+double g3(double x) { return pow(x, 3) - 3*x + 3; }
+
+
+// Edge with 1 interpolatory point in the middle
+class EdgeOrder2 {
+public:
+  CoordVector corners_;
+  CoordVector edgepoints_;
+  double length_;
+  
+  EdgeOrder2() {}  
+  EdgeOrder2(CoordVector corners) { corners_ = corners; } 
+  
+  double length_evaluate () {
+    double delta1 = corners_[0][0] - corners_[1][0];
+    double delta2 = corners_[0][1] - corners_[1][1];
+    
+    length_ = sqrt( pow(delta1, 2) + pow(delta2, 2) );
+    return length_;
+  }
+  
+  double length() { return length_; }
+
+};
+
+// Triangle with 90deg angle and 2 equal sides
+class TriangleOrder2Quadratic {
+public:
+  CoordVector corners_;
+  CoordVector edgepoints_;
+  double area_;
+  
+  TriangleOrder2Quadratic() {}  
+  TriangleOrder2Quadratic(CoordVector corners) { corners_ = corners; } 
+  
+  double area_evaluate () {
+    double delta = fabs(corners_[0][0] - corners_[1][0]);
+    double delta2 = corners_[0][2] - corners_[1][2];
+    double delta3 = corners_[0][2] - corners_[2][2];
+    
+    area_ = delta * sqrt( pow(delta, 2) + pow(delta2, 2) + pow(delta3, 2) ) / 2.0;
+    
+    return area_;
+  }
+  
+  double area() { return area_; }
+
+};
+
+typedef std::vector<TriangleOrder2Quadratic> TriangleVector;
+typedef std::vector<EdgeOrder2> EdgeVector;
+
+
+class InterpIntegratorEdge {
+protected:
+  
+  double (*integrand)(double);
+  
+  // Finds a point in the middle of the edge and evaluates function there to its y-coordinate
+  Coordinate sampleEdgeMiddle( Coordinate p1, Coordinate p2  ) {
+    Coordinate rez;
+    rez.push_back( (p1[0] + p2[0]) / 2.0 );
+    rez.push_back( estimateFunction(rez) );
+    return rez;
+  }
+
+  // Evaluates the middle edge point
+  void refineOrder2(EdgeOrder2 & edge) {
+    edge.edgepoints_.push_back( sampleEdgeMiddle(edge.corners_[0], edge.corners_[1]));
+  }
+
+  // Splits a triangle into 4 using its edge points and returns the triangles
+  EdgeVector split(EdgeOrder2 & edge) {
+    EdgeVector rez;
+        
+    CoordVector points1;
+    CoordVector points2;
+    points1.push_back(edge.corners_[0]);       points1.push_back(edge.edgepoints_[0]);
+    points2.push_back(edge.edgepoints_[0]);    points2.push_back(edge.corners_[1]);
+    
+    rez.push_back(EdgeOrder2(points1));
+    rez.push_back(EdgeOrder2(points2));
+    
+    return rez;
+  }
+  
+public:
+  
+  InterpIntegratorEdge() {  }
+  
+  // Actually calles the integrand as function of 2D local coordinate
+  double estimateFunction(Coordinate p) { return (*integrand)(p[0]); }
+
+  // Integrates the provided function over reference tetrahedron, returns result
+  double integrate( double (*f)(double), double err) {   
+    integrand = f;
+    std::queue<EdgeOrder2> edgeQueue;
+    
+    double rezLength = 0;
+    
+    Coordinate p0;
+    Coordinate p1;
+
+    p0.push_back(0.0); p0.push_back(estimateFunction(p0));
+    p1.push_back(1.0); p1.push_back(estimateFunction(p1));
+
+    CoordVector edgePoints;
+    edgePoints.push_back(p0);
+    edgePoints.push_back(p1);
+    
+    EdgeOrder2 thisEdge(edgePoints);
+    rezLength += thisEdge.length_evaluate();
+    edgeQueue.push(thisEdge);
+    
+    int edgeNumTot = 1;
+    int iterPoints = 2;
+    
+    std::cout << "---------------------------------- started integrating edge ---------------------------------" << std::endl;
+    
+    while (edgeQueue.size() > 0) {
+      thisEdge = edgeQueue.front();
+      edgeQueue.pop();
+
+      
+      rezLength -= thisEdge.length();
+      refineOrder2(thisEdge);
+      EdgeVector newEdges = split(thisEdge);
+      
+      double newLength = 0;
+      for (uint i = 0; i < 2; i++) { newLength += newEdges[i].length_evaluate();}
+      rezLength += newLength;
+      
+      edgeNumTot += 1;
+      iterPoints += 1;
+      
+      if (fabs(thisEdge.length() - newLength) > err) { for (uint i = 0; i < 2; i++) { edgeQueue.push(newEdges[i]); } }
+      
+      std::cout << "points used: " << iterPoints << ", tmp result: " << rezLength << ", Queue Size: " << edgeQueue.size() << ", lengthscale: " << fabs(thisEdge.corners_[0][0] - thisEdge.corners_[1][0]) << ", expected local error " << fabs(thisEdge.length() - newLength) << std::endl;
+    }
+    std::cout << "---------------------------------- done integrating edge ---------------------------------" << std::endl;
+    
+    return rezLength;
+    
+  }
+  
+};
+
+
+class InterpIntegratorTriangle {
+protected:
+  
+  double (*integrand)(double, double);
+  
+  // Finds a point in the middle of the edge and evaluates function there to its z-coordinate
+  Coordinate sampleEdgeMiddle( Coordinate p1, Coordinate p2  ) {
+    Coordinate rez;
+    rez.push_back( (p1[0] + p2[0]) / 2.0 );
+    rez.push_back( (p1[1] + p2[1]) / 2.0 );
+    rez.push_back( estimateFunction(rez) );
+    return rez;
+  }
+
+  // Evaluates all 3 edge points of a triangle
+  void refineOrder2(TriangleOrder2Quadratic & tri) {
+    tri.edgepoints_.push_back( sampleEdgeMiddle(tri.corners_[0], tri.corners_[1]));
+    tri.edgepoints_.push_back( sampleEdgeMiddle(tri.corners_[1], tri.corners_[2]));
+    tri.edgepoints_.push_back( sampleEdgeMiddle(tri.corners_[2], tri.corners_[0]));
+  }
+
+  // Splits a triangle into 4 using its edge points and returns the triangles
+  TriangleVector split(TriangleOrder2Quadratic & tri) {
+    TriangleVector rez;
+        
+    CoordVector points1;
+    CoordVector points2;
+    CoordVector points3;
+    CoordVector points4;
+    points1.push_back(tri.corners_[0]);       points1.push_back(tri.edgepoints_[0]);    points1.push_back(tri.edgepoints_[2]);
+    points2.push_back(tri.edgepoints_[0]);    points2.push_back(tri.corners_[1]);       points2.push_back(tri.edgepoints_[1]);
+    points3.push_back(tri.edgepoints_[2]);    points3.push_back(tri.edgepoints_[1]);    points3.push_back(tri.corners_[2]);
+    points4.push_back(tri.edgepoints_[1]);    points4.push_back(tri.edgepoints_[2]);    points4.push_back(tri.edgepoints_[0]);
+    
+    rez.push_back(TriangleOrder2Quadratic(points1));
+    rez.push_back(TriangleOrder2Quadratic(points2));
+    rez.push_back(TriangleOrder2Quadratic(points3));
+    rez.push_back(TriangleOrder2Quadratic(points4));
+    
+    return rez;
+  }
+  
+public:
+  
+  InterpIntegratorTriangle() {  }
+  
+  // Actually calles the integrand as function of 2D local coordinate
+  double estimateFunction(Coordinate p) { return (*integrand)(p[0], p[1]); }
+
+  // Integrates the provided function over reference tetrahedron, returns result
+  double integrate( double (*f)(double, double), double err) {
+    integrand = f;
+    std::queue<TriangleOrder2Quadratic> triQueue;
+    
+    double rezArea = 0;
+    
+    Coordinate p0;
+    Coordinate p1;
+    Coordinate p2;
+
+    p0.push_back(0.0); p0.push_back(0.0); p0.push_back(estimateFunction(p0));
+    p1.push_back(1.0); p1.push_back(0.0); p1.push_back(estimateFunction(p1));
+    p2.push_back(0.0); p2.push_back(1.0); p2.push_back(estimateFunction(p2));
+
+    CoordVector triPoints;
+    triPoints.push_back(p0);
+    triPoints.push_back(p1);
+    triPoints.push_back(p2);
+    
+    TriangleOrder2Quadratic thisTri(triPoints);
+    rezArea += thisTri.area_evaluate();
+    triQueue.push(thisTri);
+    
+    int triNumTot = 1;
+    int iterPoints = 3;
+    
+    std::cout << "---------------------------------- started integrating triangle ---------------------------------" << std::endl;
+    while (triQueue.size() > 0) {
+      TriangleOrder2Quadratic thisTri = triQueue.front();
+      triQueue.pop();
+
+      rezArea -= thisTri.area();
+      refineOrder2(thisTri);
+      TriangleVector newTriangles = split(thisTri);
+      
+      double newArea = 0;
+      for (uint i = 0; i < 4; i++) { newArea += newTriangles[i].area_evaluate(); }
+      rezArea += newArea;
+      
+      triNumTot += 3;
+      iterPoints += 3;
+      
+      if (fabs(thisTri.area() - newArea) > err)
+      {
+         for (uint i = 0; i < 4; i++) { triQueue.push(newTriangles[i]); }
+      }
+      
+      std::cout << "points used: " << iterPoints << ", tmp result: " << rezArea << ", Queue Size: " << triQueue.size() << ", lengthscale: " << fabs(thisTri.corners_[0][0] - thisTri.corners_[1][0]) << ", expected local error " << fabs(thisTri.area() - newArea) << std::endl;
+    }
+    std::cout << "---------------------------------- done integrating triangle ---------------------------------" << std::endl;
+    
+    return rezArea;
+    
+  }
+  
+};
+
+
+
+
+
+int main ()
+{ 
+  InterpIntegratorTriangle funIntegrator;
+  funIntegrator.integrate(f1, 1.0e-5);
+  funIntegrator.integrate(f2, 1.0e-5);
+  funIntegrator.integrate(f3, 1.0e-5);
+  
+  InterpIntegratorEdge funIntegrator2;
+  funIntegrator2.integrate(g1, 1.0e-5); 
+  funIntegrator2.integrate(g2, 1.0e-5); 
+  funIntegrator2.integrate(g3, 1.0e-5); 
+  
+  return 0;
+}
+
