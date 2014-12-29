@@ -6,6 +6,14 @@
 #include <fstream>      // std::ifstream
 
 
+// Splits a multiprocessor output file into n single processor outputs
+// ARGV[1] - number of processes 
+// ARGV[2] - prefix to search for
+// ARGV[3] - path to output file
+
+// The code loops over all lines of output and searches for the string prefix+process_number for each process.
+// When the string is found, the output is written to a file corresponding to that process
+
 int main(int argc, char* argv[])
 {
     int proc_number = atoi(argv[1]);

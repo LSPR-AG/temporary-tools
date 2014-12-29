@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     std::ifstream src;  src.open (argv[3]);
     
     
-    std::cout << "Splitting " << proc_number << "processor file " << argv[3] << " using prefix " << seek_prefix << std::endl;
+    std::cout << "Splitting " << proc_number << " processor file " << argv[3] << " using prefix " << seek_prefix << std::endl;
     
     
     std::ofstream outs[proc_number];
